@@ -18,6 +18,7 @@ public class UsuarioMapperImpl implements UsuarioMapper {
 		Transportadora transportadora = usuario.getTransportadora(); 
 		
 		TransportadoraResponse transResponse = new TransportadoraResponse(
+				transportadora.getId(),
 				transportadora.getCnpj(),
 				transportadora.getRazaoSocial(),
 				transportadora.getDataDoCadastro(), 

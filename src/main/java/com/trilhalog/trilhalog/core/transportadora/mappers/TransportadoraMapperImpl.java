@@ -12,6 +12,7 @@ public class TransportadoraMapperImpl implements TransportadoraMapper{
 	@Override
 	public TransportadoraResponse toTransportadoraResponse(Transportadora response) {
 		return new TransportadoraResponse(
+				response.getId(),
 				response.getCnpj(), 
 				response.getRazaoSocial(), 
 				response.getDataDoCadastro(), 
