@@ -38,7 +38,7 @@ public class Agendamento {
 	private TipoDoAgendamento tipoDoAgendamento;
 
 	@ManyToOne
-	@JoinColumn(name = "agendaslot_id")
+	@JoinColumn(name = "agenda_slot_id")
 	private AgendaSlot agendaSlot;
 
 	@OneToOne(cascade = CascadeType.ALL)
@@ -51,6 +51,9 @@ public class Agendamento {
 
 	public Agendamento( TipoDoAgendamento tipoDoAgendamento) {
 		this.tipoDoAgendamento = tipoDoAgendamento;
+
+	}
+	public Agendamento() {
 
 	}
 

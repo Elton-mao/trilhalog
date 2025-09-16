@@ -65,8 +65,8 @@ public class AgendaSlotServiceImpl implements AgendaSlotService {
 
 	@Override
 	public AgendaSlot buscarPorIdEntidade(String id) {
-		// TODO Auto-generated method stub
-		return null;
+		return repository.findById(id).orElseThrow(AgendaSlotNotFoundException::new);
+
 	}
 
 }

@@ -34,6 +34,9 @@ public class Carga {
 		this.observacao = observacao;
 		this.quantidade = quantidade;
 	}
+	public Carga() {
+	
+	}
 
 	
 
