@@ -2,12 +2,12 @@ package com.trilhalog.trilhalog.core.agendamento.entity;
 
 import java.util.Objects;
 
-
 import com.trilhalog.trilhalog.core.agendamento.enums.StatusDoAgendamento;
 import com.trilhalog.trilhalog.core.agendamento.enums.TipoDoAgendamento;
 import com.trilhalog.trilhalog.core.carga.entity.Carga;
 import com.trilhalog.trilhalog.core.usuario.entity.Usuario;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -21,49 +21,42 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name ="agendamentos")
+@Table(name = "agendamentos")
 public class Agendamento {
-	
+
 	@Id
-	@Column(name ="agendamento_id")
+	@Column(name = "agendamento_id")
 	@GeneratedValue(strategy = GenerationType.UUID)
 	private String id;
-	
+
 	@Enumerated(EnumType.ORDINAL)
-	@Column(name="status_agendamento")
+	@Column(name = "status_agendamento")
 	private StatusDoAgendamento status;
-	
+
 	@Enumerated(EnumType.STRING)
-	@Column(name ="tipo_agendamento")
+	@Column(name = "tipo_agendamento")
 	private TipoDoAgendamento tipoDoAgendamento;
-	
+
 	@ManyToOne
-	@JoinColumn(name ="agendaslot_id")
-	private AgendaSlot agendaSlot; 
-	
-	@OneToOne
+	@JoinColumn(name = "agendaslot_id")
+	private AgendaSlot agendaSlot;
+
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "carga_id")
-	private Carga carga; 
-	
+	private Carga carga;
+
 	@ManyToOne
 	@JoinColumn(name = "usuario_id")
 	private Usuario usuario;
 
-	public Agendamento(StatusDoAgendamento status, TipoDoAgendamento tipoDoAgendamento,
-			Carga carga, Usuario usuario,AgendaSlot agendaSlot) {
-		this.status = status;
+	public Agendamento( TipoDoAgendamento tipoDoAgendamento) {
 		this.tipoDoAgendamento = tipoDoAgendamento;
-		this.carga = carga;
-		this.usuario = usuario;
-		this.agendaSlot = agendaSlot; 
-		
+
 	}
-	
-  
+
 	public AgendaSlot getAgendaSlot() {
 		return agendaSlot;
 	}
-
 
 	public void setAgendaSlot(AgendaSlot agendaSlot) {
 		this.agendaSlot = agendaSlot;

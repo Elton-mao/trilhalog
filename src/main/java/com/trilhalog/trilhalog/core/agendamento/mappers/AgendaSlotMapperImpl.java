@@ -4,19 +4,12 @@ import org.springframework.stereotype.Component;
 
 import com.trilhalog.trilhalog.api.agendamento.dtos.AgendaSlotRequest;
 import com.trilhalog.trilhalog.api.agendamento.dtos.AgendaSlotResponse;
-import com.trilhalog.trilhalog.api.agendamento.dtos.DocaResponse;
 import com.trilhalog.trilhalog.core.agendamento.entity.AgendaSlot;
-import com.trilhalog.trilhalog.core.agendamento.entity.Doca;
 @Component
 public class AgendaSlotMapperImpl implements AgendaSlotMapper{
 
 	@Override
 	public AgendaSlotResponse toAgendaSlotResponse(AgendaSlot agendaSlot) {
-		Doca doca = agendaSlot.getDoca(); 
-		DocaResponse docaResponse = new DocaResponse(
-				doca.getId(),
-				doca.getNome()
-				);
 		
 		return new AgendaSlotResponse(
 				agendaSlot.getId(),
@@ -24,7 +17,7 @@ public class AgendaSlotMapperImpl implements AgendaSlotMapper{
 				agendaSlot.getHora(),
 				agendaSlot.getVagasTotais(),
 				agendaSlot.getVagasDisponiveis(),
-				docaResponse
+				agendaSlot.getDoca().getNome()
 				);
 	}
 

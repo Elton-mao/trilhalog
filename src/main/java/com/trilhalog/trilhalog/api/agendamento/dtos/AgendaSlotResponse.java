@@ -10,7 +10,7 @@ public record AgendaSlotResponse(
 		LocalTime hora,
 		int vagasTotais,
 		int vagasDisponiveis,
-		DocaResponse doca
+		String doca
 		) {
 
 }

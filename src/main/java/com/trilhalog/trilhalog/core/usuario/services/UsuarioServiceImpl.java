@@ -79,4 +79,10 @@ public class UsuarioServiceImpl implements UsuarioService {
 		return repository.findById(id).map(mapper::toUsuarioResponse).orElseThrow(UsuarioNotFoundException::new);
 	}
 
+	@Override
+	public Usuario buscarPorIdObjeto(String id) {
+		return repository.findById(id).orElseThrow(UsuarioNotFoundException::new);
+
+	}
+
 }

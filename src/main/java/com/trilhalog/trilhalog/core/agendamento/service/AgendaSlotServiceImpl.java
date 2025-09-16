@@ -63,4 +63,10 @@ public class AgendaSlotServiceImpl implements AgendaSlotService {
 		return repository.findById(id).map(mapper::toAgendaSlotResponse).orElseThrow(AgendaSlotNotFoundException::new);
 	}
 
+	@Override
+	public AgendaSlot buscarPorIdEntidade(String id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
