@@ -28,11 +28,13 @@ public class AgendaSlotServiceImpl implements AgendaSlotService {
 
 	@Override
 	public AgendaSlotResponse cadastrar(AgendaSlotRequest request) {
-		Doca doca = docaService.bucarPorIdEntity(request.docaId());
-		AgendaSlot agendaSlot = mapper.toAgendaSlot(request);
-		agendaSlot.setDoca(doca);
+		
+		Doca doca = docaService.bucarPorIdEntity(request.docaId());		
+		AgendaSlot agendaSlot = mapper.toAgendaSlot(request);		
+		agendaSlot.setDoca(doca);		
 		AgendaSlot agendaSlotSalvo = repository.save(agendaSlot);
 		return mapper.toAgendaSlotResponse(agendaSlotSalvo);
+		
 	}
 
 	@Override

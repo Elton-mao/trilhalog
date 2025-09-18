@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 import com.trilhalog.trilhalog.api.agendamento.dtos.AgendaSlotRequest;
 import com.trilhalog.trilhalog.api.agendamento.dtos.AgendaSlotResponse;
 import com.trilhalog.trilhalog.core.agendamento.entity.AgendaSlot;
+
 @Component
 public class AgendaSlotMapperImpl implements AgendaSlotMapper{
 
@@ -17,6 +18,7 @@ public class AgendaSlotMapperImpl implements AgendaSlotMapper{
 				agendaSlot.getHora(),
 				agendaSlot.getVagasTotais(),
 				agendaSlot.getVagasDisponiveis(),
+				agendaSlot.getStatus(),
 				agendaSlot.getDoca().getNome()
 				);
 	}
@@ -26,8 +28,7 @@ public class AgendaSlotMapperImpl implements AgendaSlotMapper{
 		return new AgendaSlot(
 				request.data(),
 				request.hora(),
-				request.vagasTotais(),
-				request.vagasDisponiveis()
+				request.vagasTotais()
 				);
 	}
 

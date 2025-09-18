@@ -1,7 +1,6 @@
 package com.trilhalog.trilhalog.core.transportadora.entity;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -43,7 +42,7 @@ public class Transportadora {
 	
 	@OneToMany(mappedBy = "transportadora")
 	@JsonManagedReference
-	private List<Usuario> usuarios = new ArrayList<>(); 
+	private List<Usuario> usuarios; 
 	
 	public Transportadora(String cnpj, String razaoSocial) {
 		super();

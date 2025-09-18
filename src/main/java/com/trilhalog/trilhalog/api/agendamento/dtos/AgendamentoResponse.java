@@ -13,9 +13,9 @@ public record AgendamentoResponse(
 		TipoDoAgendamento tipoDoAgendamento,
 		LocalDate data,
 		LocalTime hora,
-		CargaResponse carga,
-		String usuario,
-		String transportadora
+		String usuarioNome,
+		String empresaRazaosocial,
+		CargaResponse cargaResponse
 		) {
 
 }

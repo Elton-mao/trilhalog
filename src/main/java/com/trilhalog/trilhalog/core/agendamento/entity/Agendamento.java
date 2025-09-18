@@ -29,7 +29,7 @@ public class Agendamento {
 	@GeneratedValue(strategy = GenerationType.UUID)
 	private String id;
 
-	@Enumerated(EnumType.ORDINAL)
+	@Enumerated(EnumType.STRING)
 	@Column(name = "status_agendamento")
 	private StatusDoAgendamento status;
 

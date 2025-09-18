@@ -6,10 +6,10 @@ import jakarta.validation.constraints.NotBlank;
 
 public record TransportadoraRequest(
 		
-		@CNPJ(message = "{trans.name.CNPJ}")
+		@CNPJ(message = "{trans.cnpj.CNPJ}")
 		String cnpj,
 		
-		@NotBlank(message = "{trans.name.notblack}")
+		@NotBlank(message = "{trans.name.NotBlank}")
 		String razaoSocial
 		) {
 }

@@ -16,10 +16,10 @@ public class AgendamentoMappeImpl implements AgendamentoMapper {
 		Carga carga = response.getCarga();
 		CargaResponse cargaResponse = new CargaResponse(carga.getId(), carga.getDescricao(), carga.getObservacao(),
 				carga.getQuantidade());
-
+	
 		return new AgendamentoResponse(response.getId(), response.getTipoDoAgendamento(),
-				response.getAgendaSlot().getData(), response.getAgendaSlot().getHora(), cargaResponse,
-				response.getUsuario().getNome(), response.getUsuario().getTransportadora().getRazaoSocial());
+				response.getAgendaSlot().getData(), response.getAgendaSlot().getHora(),response.getUsuario().getNome(),response.getUsuario().getTransportadora().getRazaoSocial(),cargaResponse
+				);
 	}
 
 	@Override

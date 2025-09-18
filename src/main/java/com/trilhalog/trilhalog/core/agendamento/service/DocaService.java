@@ -12,4 +12,5 @@ public interface DocaService {
 	DocaResponse editar(String id, DocaRequest request);
 	DocaResponse buscarPorid(String id);
 	Doca bucarPorIdEntity(String id);
+	
 }

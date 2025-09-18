@@ -1,8 +1,10 @@
 package com.trilhalog.trilhalog.core.usuario.entity;
 
+import java.util.List;
 import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.trilhalog.trilhalog.core.agendamento.entity.Agendamento;
 import com.trilhalog.trilhalog.core.transportadora.entity.Transportadora;
 import com.trilhalog.trilhalog.core.usuario.enums.StatusDoCadastroDoUsuario;
 import com.trilhalog.trilhalog.core.usuario.enums.TipoPerfil;
@@ -16,6 +18,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -51,6 +54,9 @@ public class Usuario {
 	@JsonBackReference
 	@JoinColumn(name = "transportadora_id")
 	private Transportadora transportadora;
+	
+	@OneToMany(mappedBy = "usuario")
+	private List<Agendamento> agendamentos ; 
 
 	public Usuario(String nome, String telefone, String email, String senha, TipoPerfil tipoPerfil) {
 		this.nome = nome;

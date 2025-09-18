@@ -18,8 +18,6 @@ public record AgendaSlotRequest(
 		@Min(value = 1, message =  "{agendaSlot.vagasTotais.Min}")
 		int vagasTotais,
 		
-		int vagasDisponiveis,
-		
 		@NotNull(message = "{agendaSlot.docaId.NotNull}")
 		String docaId
 		) {

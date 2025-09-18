@@ -4,9 +4,12 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Objects;
 
+import com.trilhalog.trilhalog.core.agendamento.enums.AgendaSlotStatus;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -17,39 +20,61 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "agenda_slots")
 public class AgendaSlot {
-	
+
 	@Id
 	@Column(name = "agenda_slot_id")
 	@GeneratedValue(strategy = GenerationType.UUID)
 	private String id;
-	
-	@Column(name ="data")
+
+	@Column(name = "data")
 	private LocalDate data;
-	
-	@Column(name ="hora")
+
+	@Column(name = "hora")
 	private LocalTime hora;
-	
-	@Column(name ="vagas_totais")
-	private int vagasTotais; 
-	
-	@Column(name ="vagas_disponiveis")
+
+	@Column(name = "vagas_totais")
+	private int vagasTotais;
+
+	@Column(name = "vagas_disponiveis")
 	private int vagasDisponiveis;
-	
+
+	@Column(name = "agenda_slot_status")
+	@Enumerated(EnumType.STRING)
+	private AgendaSlotStatus status;
+
 	@ManyToOne
-	@JoinColumn( name= "doca_id")
+	@JoinColumn(name = "doca_id")
 	private Doca doca;
-	
-	public AgendaSlot(LocalDate data,LocalTime hora, int vagasTotais, int vagasDisponiveis) {
+
+	public AgendaSlot(LocalDate data, LocalTime hora, int vagasTotais) {
 		this.data = data;
 		this.hora = hora;
 		this.vagasTotais = vagasTotais;
-		this.vagasDisponiveis = vagasDisponiveis;
-		
+		this.vagasDisponiveis = vagasTotais;
+		this.status = AgendaSlotStatus.DISPONIVEL;
+
 	}
+	public AgendaSlot(LocalDate data, LocalTime hora, int vagasTotais, Doca doca) {
+	    this.data = data;
+	    this.hora = hora;
+	    this.vagasTotais = vagasTotais;
+	    this.vagasDisponiveis = vagasTotais;
+	    this.doca = doca;
+	    this.status = AgendaSlotStatus.DISPONIVEL;
+	}
+
+	public AgendaSlotStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(AgendaSlotStatus status) {
+		this.status = status;
+	}
+
 	public AgendaSlot() {
-		
-		
+
 	}
+
 	public Doca getDoca() {
 		return doca;
 	}
@@ -69,15 +94,19 @@ public class AgendaSlot {
 	public LocalDate getData() {
 		return data;
 	}
+
 	public void setData(LocalDate data) {
 		this.data = data;
 	}
+
 	public LocalTime getHora() {
 		return hora;
 	}
+
 	public void setHora(LocalTime hora) {
 		this.hora = hora;
 	}
+
 	public int getVagasTotais() {
 		return vagasTotais;
 	}
@@ -117,6 +146,6 @@ public class AgendaSlot {
 		return Objects.equals(data, other.data) && Objects.equals(doca, other.doca) && Objects.equals(hora, other.hora)
 				&& Objects.equals(id, other.id) && vagasDisponiveis == other.vagasDisponiveis
 				&& vagasTotais == other.vagasTotais;
-	} 
-	
+	}
+
 }
