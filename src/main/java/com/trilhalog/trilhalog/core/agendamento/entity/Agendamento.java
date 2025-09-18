@@ -51,6 +51,7 @@ public class Agendamento {
 
 	public Agendamento( TipoDoAgendamento tipoDoAgendamento) {
 		this.tipoDoAgendamento = tipoDoAgendamento;
+		
 
 	}
 	public Agendamento() {

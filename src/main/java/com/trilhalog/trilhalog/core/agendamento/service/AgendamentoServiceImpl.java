@@ -2,12 +2,14 @@ package com.trilhalog.trilhalog.core.agendamento.service;
 
 import java.util.List;
 
+
 import org.springframework.stereotype.Service;
 
 import com.trilhalog.trilhalog.api.agendamento.dtos.AgendamentoRequest;
 import com.trilhalog.trilhalog.api.agendamento.dtos.AgendamentoResponse;
 import com.trilhalog.trilhalog.core.agendamento.entity.AgendaSlot;
 import com.trilhalog.trilhalog.core.agendamento.entity.Agendamento;
+import com.trilhalog.trilhalog.core.agendamento.enums.AgendaSlotStatus;
 import com.trilhalog.trilhalog.core.agendamento.enums.StatusDoAgendamento;
 import com.trilhalog.trilhalog.core.agendamento.mappers.AgendamentoMapper;
 import com.trilhalog.trilhalog.core.agendamento.repository.AgendamentoRepository;
@@ -48,16 +50,31 @@ public class AgendamentoServiceImpl implements AgendamentoService {
 	public AgendamentoResponse agendar(AgendamentoRequest request) {
 
 		Agendamento agendamento = agendamentoMapper.toAgendamento(request);
+		
 		agendamento.setUsuario(usuarioService.buscarPorIdObjeto(request.usuario()));
+		
 		AgendaSlot agendaSlot = agendaSlotService.buscarPorIdEntidade(request.agendaSlot());
+		
 		Carga carga = cargaMapper.toCarga(request.carga());
+		
+		//valida se existe vagas disponiveis no horario
         if(agendaSlot.getVagasDisponiveis() <=0) {
         	throw new AgendaSlotNotFoundException("não ha vagas Disponiveis para este horário");
         }
-		agendamento.setStatus(StatusDoAgendamento.PEDENTE);
+        
+        if(agendaSlot.getVagasDisponiveis() == 1){
+        	agendaSlot.setStatus(AgendaSlotStatus.ESGOTADO);
+        }else {
+        	agendamento.setStatus(StatusDoAgendamento.PEDENTE);
+        }
+        
+		
 		agendamento.setCarga(carga);
 		agendamento.setAgendaSlot(agendaSlot);
+		
+		//decrementa o numero de vagas disponiveis
 		agendaSlot.setVagasDisponiveis(agendaSlot.getVagasDisponiveis() - 1);
+		
 		Agendamento agendamentoSalvo = repository.save(agendamento);
 		return agendamentoMapper.toAgendamentoResponse(agendamentoSalvo);
 
@@ -75,5 +92,6 @@ public class AgendamentoServiceImpl implements AgendamentoService {
 		Agendamento agendamento = repository.findById(id).orElseThrow(AgendamentoNotFoundException::new);
 		agendamento.setStatus(status);
 	}
-
+	
+	
 }

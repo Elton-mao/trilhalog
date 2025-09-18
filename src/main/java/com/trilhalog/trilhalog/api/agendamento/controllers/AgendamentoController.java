@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.trilhalog.trilhalog.api.agendamento.dtos.AgendamentoRequest;
 import com.trilhalog.trilhalog.api.agendamento.dtos.AgendamentoResponse;
-import com.trilhalog.trilhalog.core.agendamento.entity.Agendamento;
 import com.trilhalog.trilhalog.core.agendamento.enums.StatusDoAgendamento;
 import com.trilhalog.trilhalog.core.agendamento.repository.AgendamentoRepository;
 import com.trilhalog.trilhalog.core.agendamento.service.AgendamentoService;
