@@ -20,40 +20,84 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
+/**
+ * Representa a entidade Agendamento no banco de dados.
+ * 
+ * <p>Esta classe é uma entidade JPA, mapeada para a tabela "agendamentos".
+ * Ela armazena as informações sobre um agendamento de carga ou descarga em uma doca.</p>
+ * 
+ * <p>Relacionamentos:
+ * <ul>
+ *   <li>{@link AgendaSlot}: Muitos agendamentos para um slot de agenda ({@code @ManyToOne}).</li>
+ *   <li>{@link Carga}: Um agendamento para uma carga ({@code @OneToOne}).</li>
+ *   <li>{@link Usuario}: Muitos agendamentos para um usuário ({@code @ManyToOne}).</li>
+ * </ul>
+ * </p>
+ */
 @Entity
 @Table(name = "agendamentos")
 public class Agendamento {
 
+	/**
+	 * O identificador único do agendamento.
+	 * É gerado automaticamente como um UUID.
+	 */
 	@Id
 	@Column(name = "agendamento_id")
 	@GeneratedValue(strategy = GenerationType.UUID)
 	private String id;
 
+	/**
+	 * O status atual do agendamento (ex: AGENDADO, CANCELADO, CONCLUIDO).
+	 * Mapeado como uma String no banco de dados.
+	 */
 	@Enumerated(EnumType.STRING)
 	@Column(name = "status_agendamento")
 	private StatusDoAgendamento status;
 
+	/**
+	 * O tipo do agendamento (ex: CARGA, DESCARGA).
+	 * Mapeado como uma String no banco de dados.
+	 */
 	@Enumerated(EnumType.STRING)
 	@Column(name = "tipo_agendamento")
 	private TipoDoAgendamento tipoDoAgendamento;
 
+	/**
+	 * O slot de agenda (horário) associado a este agendamento.
+	 */
 	@ManyToOne
 	@JoinColumn(name = "agenda_slot_id")
 	private AgendaSlot agendaSlot;
 
+	/**
+	 * A carga associada a este agendamento.
+	 * A operação em cascata ALL garante que a carga seja salva/atualizada/removida junto com o agendamento.
+	 */
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "carga_id")
 	private Carga carga;
 
+	/**
+	 * O usuário que realizou o agendamento.
+	 */
 	@ManyToOne
 	@JoinColumn(name = "usuario_id")
 	private Usuario usuario;
 
+	/**
+     * Construtor que inicializa o agendamento com o tipo.
+     * 
+     * @param tipoDoAgendamento O tipo do agendamento.
+     */
 	public Agendamento( TipoDoAgendamento tipoDoAgendamento) {
 		this.tipoDoAgendamento = tipoDoAgendamento;
 		
 
 	}
+    /**
+     * Construtor padrão.
+     */
 	public Agendamento() {
 
 	}

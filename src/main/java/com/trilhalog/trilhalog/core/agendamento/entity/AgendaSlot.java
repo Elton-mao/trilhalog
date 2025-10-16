@@ -17,35 +17,78 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
+/**
+ * Representa um slot (intervalo de tempo) na agenda de uma doca.
+ * 
+ * <p>Esta classe é uma entidade JPA, mapeada para a tabela "agenda_slots".
+ * Ela define um período de tempo em uma data específica para uma doca, com um número
+ * de vagas para agendamentos.</p>
+ * 
+ * <p>Relacionamentos:
+ * <ul>
+ *   <li>{@link Doca}: Muitos slots de agenda para uma doca ({@code @ManyToOne}).</li>
+ * </ul>
+ * </p>
+ */
 @Entity
 @Table(name = "agenda_slots")
 public class AgendaSlot {
 
+	/**
+	 * O identificador único do slot de agenda.
+	 * É gerado automaticamente como um UUID.
+	 */
 	@Id
 	@Column(name = "agenda_slot_id")
 	@GeneratedValue(strategy = GenerationType.UUID)
 	private String id;
 
+	/**
+	 * A data do slot de agenda.
+	 */
 	@Column(name = "data")
 	private LocalDate data;
 
+	/**
+	 * A hora de início do slot de agenda.
+	 */
 	@Column(name = "hora")
 	private LocalTime hora;
 
+	/**
+	 * O número total de vagas disponíveis neste slot.
+	 */
 	@Column(name = "vagas_totais")
 	private int vagasTotais;
 
+	/**
+	 * O número de vagas que ainda estão disponíveis para agendamento.
+	 */
 	@Column(name = "vagas_disponiveis")
 	private int vagasDisponiveis;
 
+	/**
+	 * O status do slot (ex: DISPONIVEL, LOTADO).
+	 * Mapeado como uma String no banco de dados.
+	 */
 	@Column(name = "agenda_slot_status")
 	@Enumerated(EnumType.STRING)
 	private AgendaSlotStatus status;
 
+	/**
+	 * A doca à qual este slot de agenda pertence.
+	 */
 	@ManyToOne
 	@JoinColumn(name = "doca_id")
 	private Doca doca;
 
+	/**
+     * Construtor para criar um slot de agenda.
+     * 
+     * @param data A data do slot.
+     * @param hora A hora de início do slot.
+     * @param vagasTotais O número total de vagas.
+     */
 	public AgendaSlot(LocalDate data, LocalTime hora, int vagasTotais) {
 		this.data = data;
 		this.hora = hora;
@@ -54,6 +97,14 @@ public class AgendaSlot {
 		this.status = AgendaSlotStatus.DISPONIVEL;
 
 	}
+    /**
+     * Construtor para criar um slot de agenda associado a uma doca.
+     * 
+     * @param data A data do slot.
+     * @param hora A hora de início do slot.
+     * @param vagasTotais O número total de vagas.
+     * @param doca A doca associada.
+     */
 	public AgendaSlot(LocalDate data, LocalTime hora, int vagasTotais, Doca doca) {
 	    this.data = data;
 	    this.hora = hora;
@@ -71,6 +122,9 @@ public class AgendaSlot {
 		this.status = status;
 	}
 
+	/**
+     * Construtor padrão.
+     */
 	public AgendaSlot() {
 
 	}

@@ -9,6 +9,7 @@ import com.trilhalog.trilhalog.core.transportadora.entity.Transportadora;
 import com.trilhalog.trilhalog.core.usuario.enums.StatusDoCadastroDoUsuario;
 import com.trilhalog.trilhalog.core.usuario.enums.TipoPerfil;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -55,7 +56,7 @@ public class Usuario {
 	@JoinColumn(name = "transportadora_id")
 	private Transportadora transportadora;
 	
-	@OneToMany(mappedBy = "usuario")
+	@OneToMany(mappedBy = "usuario" ,cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Agendamento> agendamentos ; 
 
 	public Usuario(String nome, String telefone, String email, String senha, TipoPerfil tipoPerfil) {

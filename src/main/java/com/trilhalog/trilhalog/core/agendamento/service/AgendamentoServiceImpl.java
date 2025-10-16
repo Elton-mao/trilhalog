@@ -79,7 +79,7 @@ public class AgendamentoServiceImpl implements AgendamentoService {
 		return agendamentoMapper.toAgendamentoResponse(agendamentoSalvo);
 
 	}
-
+    
 	@Override
 	public void deletar(String id) {
 		Agendamento agendamento = repository.findById(id).orElseThrow(AgendamentoNotFoundException::new);

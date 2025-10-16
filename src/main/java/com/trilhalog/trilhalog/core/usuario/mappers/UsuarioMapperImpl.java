@@ -1,5 +1,6 @@
 package com.trilhalog.trilhalog.core.usuario.mappers;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import com.trilhalog.trilhalog.api.transportadora.dtos.TransportadoraResponse;
@@ -10,8 +11,13 @@ import com.trilhalog.trilhalog.core.usuario.entity.Usuario;
 
 @Component
 public class UsuarioMapperImpl implements UsuarioMapper {
+	private final PasswordEncoder bcriptEncode;
 	
-	
+	public UsuarioMapperImpl(PasswordEncoder bcriptEncode) {
+		super();
+		this.bcriptEncode = bcriptEncode;
+	}
+
 	@Override
 	public UsuarioResponse toUsuarioResponse(Usuario usuario) {
 		
@@ -40,7 +46,7 @@ public class UsuarioMapperImpl implements UsuarioMapper {
 				request.nome(),
 				request.telefone(), 
 				request.email(),
-				request.senha(),
+				bcriptEncode.encode(request.senha()),
 				request.tipoPerfil()
 				);
 	}
