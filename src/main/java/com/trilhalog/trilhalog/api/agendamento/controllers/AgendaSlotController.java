@@ -17,10 +17,12 @@ import com.trilhalog.trilhalog.api.agendamento.dtos.AgendaSlotRequest;
 import com.trilhalog.trilhalog.api.agendamento.dtos.AgendaSlotResponse;
 import com.trilhalog.trilhalog.core.agendamento.service.AgendaSlotService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 /**
- * Controlador REST para gerenciar os slots de agenda (horários disponíveis).
+ 
  * 
  * <p>Esta classe é anotada com {@link RestController}, expondo endpoints para
  * operações CRUD (Criar, Ler, Atualizar, Deletar) relacionadas aos slots de agenda.
@@ -29,6 +31,7 @@ import jakarta.validation.Valid;
  * <p>Utiliza {@link AgendaSlotService} para a lógica de negócio e DTOs como
  * {@link AgendaSlotRequest} e {@link AgendaSlotResponse} para a comunicação.</p>
  */
+@Tag(name="horários disponíveis",description="Controlador REST para gerenciar os slots de agenda (horários disponíveis).")
 @RestController
 @RequestMapping("api/agendaslot")
 public class AgendaSlotController {
@@ -43,89 +46,40 @@ public class AgendaSlotController {
 		this.service = service;
 	}
 
-	/**
-     * Retorna uma lista de todos os slots de agenda.
-     * 
-     * <p><b>Exemplo de Resposta (JSON):</b></p>
-     * <pre>
-     * [
-     *   {
-     *     "id": "1",
-     *     "inicio": "2025-10-25T09:00:00",
-     *     "fim": "2025-10-25T10:00:00",
-     *     "status": "DISPONIVEL"
-     *   }
-     * ]
-     * </pre>
-     * 
-     * @return Uma lista de {@link AgendaSlotResponse}.
-     */
+
 	@GetMapping
+	@Operation(summary ="Retorna uma Lista de todos os horarios cadastrados")
 	public List<AgendaSlotResponse> listarTodos(){
 		return service.listarTodos();
 	}
 	
-	/**
-     * Cadastra um novo slot de agenda.
-     * 
-     * <p>Retorna o status HTTP 201 (Created) em caso de sucesso.</p>
-     * 
-     * <p><b>Exemplo de Requisição (JSON):</b></p>
-     * <pre>
-     * {
-     *   "inicio": "2025-10-27T11:00:00",
-     *   "fim": "2025-10-27T12:00:00",
-     *   "docaId": "D1"
-     * }
-     * </pre>
-     * 
-     * @param request O corpo da requisição com os dados do novo slot, validado pela anotação {@link Valid}.
-     * @return O {@link AgendaSlotResponse} do slot criado.
-     */
+	
 	@PostMapping
 	@ResponseStatus(code = HttpStatus.CREATED)
+	@Operation(summary ="cadastra horarios disponives")
 	public AgendaSlotResponse cadastrar(@RequestBody @Valid AgendaSlotRequest request) {
 		return service.cadastrar(request);
 	}
 	
-	/**
-     * Atualiza um slot de agenda existente.
-     * 
-     * <p>Retorna o status HTTP 200 (OK) em caso de sucesso.</p>
-     * 
-     * @param id O ID do slot a ser atualizado.
-     * @param request O corpo da requisição com os dados atualizados.
-     * @return O {@link AgendaSlotResponse} do slot atualizado.
-     * @throws com.trilhalog.trilhalog.core.exceptions.custom.AgendaSlotNotFoundException Se o slot com o ID fornecido não for encontrado.
-     */
+	
 	@PutMapping("/{id}")
 	@ResponseStatus(code = HttpStatus.OK)
+	@Operation(summary = "Atualiza um slot de agenda existente")
 	public AgendaSlotResponse editar(@PathVariable String id, @RequestBody AgendaSlotRequest request) {
 		return service.editar(id, request);
 	}
 	
-	/**
-     * Busca um slot de agenda pelo seu ID.
-     * 
-     * @param id O ID do slot a ser buscado.
-     * @return O {@link AgendaSlotResponse} correspondente ao ID.
-     * @throws com.trilhalog.trilhalog.core.exceptions.custom.AgendaSlotNotFoundException Se o slot com o ID fornecido não for encontrado.
-     */
+	
 	@GetMapping("/{id}")
+	@Operation(summary ="Busca um slot de agenda pelo seu ID.")
 	public AgendaSlotResponse buscarPorId(@PathVariable String id) {
 		return service.buscarPorId(id);
 	}
 	
-	/**
-     * Deleta um slot de agenda pelo seu ID.
-     * 
-     * <p>Retorna o status HTTP 204 (No Content) em caso de sucesso.</p>
-     * 
-     * @param id O ID do slot a ser deletado.
-     * @throws com.trilhalog.trilhalog.core.exceptions.custom.AgendaSlotNotFoundException Se o slot com o ID fornecido não for encontrado.
-     */
+
 	@DeleteMapping("/{id}")
 	@ResponseStatus(code = HttpStatus.NO_CONTENT)
+	@Operation(summary="Deleta um slot de agenda pelo seu ID.")
 	public void deletar(@PathVariable String id) {
 		service.deletar(id);
 

@@ -19,10 +19,13 @@ import com.trilhalog.trilhalog.api.usuario.dto.UsuarioResquest;
 import com.trilhalog.trilhalog.core.usuario.enums.StatusDoCadastroDoUsuario;
 import com.trilhalog.trilhalog.core.usuario.services.UsuarioService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("api/usuario")
+@Tag(name ="Gerenciamento de Usuarios",description ="Controlador REST para gerenciamento de Usuarios ")
 public class UsuarioController {
 			
 	private final UsuarioService service;
@@ -33,35 +36,40 @@ public class UsuarioController {
 	}
 	
 	@GetMapping
+	@Operation(summary="Retorna uma Lista com Todos Usuarios Cadastrados")
 	public List<UsuarioResponse> listarTodos() {
 		 return service.listarTodos(); 
 	}
 	
 	@PostMapping
 	@ResponseStatus(code = HttpStatus.CREATED)
+	@Operation(summary="Cadastra um novo Usuario")
 	public UsuarioResponse cadastrar(@RequestBody @Valid UsuarioResquest request) {
-	    System.out.println(request.transportadora());
 		return service.cadastrar(request);
 	}
 	@PutMapping("/{id}")
 	@ResponseStatus(code = HttpStatus.OK)
+	@Operation(summary="Atualiza Cadastro do Usuario")
 	public UsuarioResponse editar(@PathVariable  String id,@RequestBody UsuarioResquest request) {
 		return service.editar(request, id);
 	}
 	
 	@DeleteMapping("/{id}")
 	@ResponseStatus(code = HttpStatus.NO_CONTENT)
+	@Operation(summary="deleta um Usuario por seu ID")
 	public void deletar( @PathVariable  String id) {
 		service.deletar(id);
 	}
 	
 	@PatchMapping("/{id}")
 	@ResponseStatus(code = HttpStatus.OK)
+	@Operation(summary = "desativa um Usuario Por seu ID")
 	public UsuarioResponse desativar(@PathVariable String id, @RequestBody StatusDoCadastroDoUsuario status) {
 		return service.desativar(id, status); 
 	}
 	
 	@GetMapping("/{id}")
+	@Operation(summary="buscar um Usuario por seu ID")
 	public UsuarioResponse buscarPorId(@PathVariable String id) {
 		return service.buscarPorId(id);
 	}
